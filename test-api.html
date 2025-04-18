@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste de API</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .result { padding: 15px; border: 1px solid #ddd; margin-top: 20px; }
+        button { padding: 10px 15px; background: #4CAF50; color: white; border: none; cursor: pointer; }
+        button:hover { background: #45a049; }
+        .error { color: red; }
+        .success { color: green; }
+    </style>
+</head>
+<body>
+    <h1>Teste de Conexão com a API TodoList</h1>
+    <p>Esta página testa se o backend da API TodoList está respondendo corretamente.</p>
+    
+    <div>
+        <input type="text" id="apiUrl" value="https://todolist-api.onrender.com" style="width: 300px;">
+        <button onclick="testApi()">Testar Conexão</button>
+    </div>
+    
+    <div class="result" id="result">
+        <p>Os resultados aparecerão aqui...</p>
+    </div>
+
+    <script>
+        async function testApi() {
+            const apiUrl = document.getElementById("apiUrl").value;
+            const resultDiv = document.getElementById("result");
+            
+            resultDiv.innerHTML = "<p>Testando conexão com: " + apiUrl + "</p>";
+            
+            try {
+                // Teste 1: Endpoint raiz
+                resultDiv.innerHTML += "<p>Teste 1: Acessando endpoint raiz (/)...</p>";
+                const response1 = await fetch(`${apiUrl}/`, {
+                    method: "GET",
+                    headers: { "Content-Type": "application/json" }
+                });
+                
+                if (response1.ok) {
+                    const data1 = await response1.json();
+                    resultDiv.innerHTML += `<p class="success">✓ Sucesso! Resposta: ${JSON.stringify(data1)}</p>`;
+                } else {
+                    resultDiv.innerHTML += `<p class="error">✗ Erro: ${response1.status} ${response1.statusText}</p>`;
+                }
+                
+                // Teste 2: Endpoint de teste CORS
+                resultDiv.innerHTML += "<p>Teste 2: Verificando configuração CORS (/test-cors)...</p>";
+                const response2 = await fetch(`${apiUrl}/test-cors`, {
+                    method: "GET",
+                    headers: { "Content-Type": "application/json" }
+                });
+                
+                if (response2.ok) {
+                    const data2 = await response2.json();
+                    resultDiv.innerHTML += `<p class="success">✓ Sucesso! Resposta: ${JSON.stringify(data2)}</p>`;
+                } else {
+                    resultDiv.innerHTML += `<p class="error">✗ Erro: ${response2.status} ${response2.statusText}</p>`;
+                }
+                
+            } catch (error) {
+                resultDiv.innerHTML += `<p class="error">✗ Erro de conexão: ${error.message}</p>`;
+                resultDiv.innerHTML += `<p>Possíveis causas:</p>
+                                       <ul>
+                                         <li>O servidor está offline</li>
+                                         <li>Problema de CORS - Verifique se a API está configurada para aceitar requisições deste domínio</li>
+                                         <li>Erro de rede ou firewall</li>
+                                       </ul>`;
+            }
+        }
+    </script>
+</body>
+</html>
