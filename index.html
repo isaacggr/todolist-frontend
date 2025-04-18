@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>TodoList App</title>
+      <link rel="stylesheet" href="css/style.css" />
+      <link
+         rel="stylesheet"
+         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      />
+      <link
+         href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+         rel="stylesheet"
+      />
+   </head>
+   <body>
+      <div class="container">
+         <header>
+            <h1><i class="fas fa-check-circle"></i> TodoList</h1>
+            <div id="user-area">
+               <div id="login-register-area">
+                  <button id="login-btn" class="btn">Entrar</button>
+                  <button id="register-btn" class="btn primary">
+                     Cadastrar
+                  </button>
+               </div>
+               <div id="user-info" style="display: none">
+                  <span id="username-display"></span>
+                  <button id="logout-btn" class="btn">Sair</button>
+               </div>
+            </div>
+         </header>
+
+         <!-- Login Modal -->
+         <div id="login-modal" class="modal">
+            <div class="modal-content">
+               <span class="close">&times;</span>
+               <h2>Entrar</h2>
+               <form id="login-form">
+                  <div class="form-group">
+                     <label for="login-username">Nome de usuário</label>
+                     <input type="text" id="login-username" required />
+                  </div>
+                  <div class="form-group">
+                     <label for="login-password">Senha</label>
+                     <input type="password" id="login-password" required />
+                  </div>
+                  <button type="submit" class="btn primary">Entrar</button>
+               </form>
+            </div>
+         </div>
+
+         <!-- Register Modal -->
+         <div id="register-modal" class="modal">
+            <div class="modal-content">
+               <span class="close">&times;</span>
+               <h2>Cadastrar</h2>
+               <form id="register-form">
+                  <div class="form-group">
+                     <label for="register-name">Nome completo</label>
+                     <input type="text" id="register-name" required />
+                  </div>
+                  <div class="form-group">
+                     <label for="register-username">Nome de usuário</label>
+                     <input type="text" id="register-username" required />
+                  </div>
+                  <div class="form-group">
+                     <label for="register-password">Senha</label>
+                     <input type="password" id="register-password" required />
+                  </div>
+                  <button type="submit" class="btn primary">Cadastrar</button>
+               </form>
+            </div>
+         </div>
+
+         <main>
+            <section id="unauthenticated-content">
+               <div class="welcome-message">
+                  <h2>Bem-vindo ao TodoList</h2>
+                  <p>
+                     Faça login ou cadastre-se para começar a gerenciar suas
+                     tarefas.
+                  </p>
+                  <img
+                     src="https://cdn-icons-png.flaticon.com/512/2098/2098402.png"
+                     alt="Task illustration"
+                     class="welcome-img"
+                  />
+               </div>
+            </section>
+
+            <section id="authenticated-content" style="display: none">
+               <div class="add-task">
+                  <h2>Adicionar nova tarefa</h2>
+                  <form id="task-form">
+                     <div class="form-group">
+                        <label for="task-title">Título</label>
+                        <input
+                           type="text"
+                           id="task-title"
+                           required
+                           maxlength="50"
+                        />
+                     </div>
+                     <div class="form-group">
+                        <label for="task-description">Descrição</label>
+                        <textarea
+                           id="task-description"
+                           required
+                           maxlength="255"
+                        ></textarea>
+                     </div>
+                     <div class="form-row">
+                        <div class="form-group">
+                           <label for="task-start">Data de início</label>
+                           <input
+                              type="datetime-local"
+                              id="task-start"
+                              required
+                           />
+                        </div>
+                        <div class="form-group">
+                           <label for="task-end">Data de término</label>
+                           <input
+                              type="datetime-local"
+                              id="task-end"
+                              required
+                           />
+                        </div>
+                     </div>
+                     <div class="form-group">
+                        <label for="task-priority">Prioridade</label>
+                        <select id="task-priority" required>
+                           <option value="BAIXA">Baixa</option>
+                           <option value="MEDIA">Média</option>
+                           <option value="ALTA">Alta</option>
+                        </select>
+                     </div>
+                     <button type="submit" class="btn primary">
+                        Adicionar Tarefa
+                     </button>
+                  </form>
+               </div>
+
+               <div class="tasks-list">
+                  <h2>Minhas Tarefas</h2>
+                  <div class="filter-tasks">
+                     <select id="filter-priority">
+                        <option value="TODAS">Todas as prioridades</option>
+                        <option value="BAIXA">Baixa</option>
+                        <option value="MEDIA">Média</option>
+                        <option value="ALTA">Alta</option>
+                     </select>
+                     <input
+                        type="text"
+                        id="search-task"
+                        placeholder="Buscar tarefas..."
+                     />
+                  </div>
+                  <div id="tasks-container"></div>
+               </div>
+            </section>
+         </main>
+
+         <footer>
+            <p>&copy; 2024 TodoList App. Todos os direitos reservados.</p>
+         </footer>
+      </div>
+
+      <div id="toast"></div>
+
+      <!-- Carrega a configuração primeiro -->
+      <script src="js/config.js"></script>
+      <!-- Depois carrega o script principal -->
+      <script src="js/script.js"></script>
+   </body>
+</html>
